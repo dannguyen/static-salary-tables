@@ -102,17 +102,20 @@ end
 def make_list_page
   require 'erb'
   open("./pages/list-table.html", "w") do |f|
+    @header = ""
+    @header << %Q{
+      <link rel="stylesheet" href="../styles/sortable-theme-slick.css" />
+      <script src="../javascripts/list.js"></script>
+      <script src="../javascripts/sortable.js"></script>
+    }
 
     @body = ''
     @body << %Q{
       <div id="salaries">
       <input class="search" placeholder="Search" />
 
-      <button class="sort" data-sort="last_name">Last Name</button>
-      <button class="sort" data-sort="department">Department</button>
-      <button class="sort" data-sort="title">Title</button>
 
-      <table>
+      <table class="sortable-theme-slick" data-sortable>
         <thead>
           <tr>
             #{(BUFFERED_ATTS + TAMPERED_ATTS).map{|a| "<th>#{a}</th>"}.join  }
@@ -128,11 +131,7 @@ def make_list_page
 
     @body << %q{</tbody></table></div>}
 
-    @footer = %q{
-      <script src="../javascripts/list.js"></script>
-    }
-#    @footer >> %q{      <script src="../javascripts/list.fuzzy-search.js"></script>}
-
+    @footer = ""
     @footer += %Q{
         <script>
 
@@ -162,7 +161,7 @@ PAGE_TEMPLATE = %Q{
 
     <!-- styles -->
 
-    <%= @js %>
+    <%= @header %>
 
   </head>
   <body>
