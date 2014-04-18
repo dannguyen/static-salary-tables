@@ -136,6 +136,7 @@ def make_list_page
         <script>
 
         var nameList = new List('salaries', {
+          page: 100000,
           valueNames: [ 'first_name', 'last_name', 'title', 'department' ]
         });
 
