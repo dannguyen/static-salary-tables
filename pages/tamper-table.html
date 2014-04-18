@@ -7,6 +7,7 @@
 
     
       <script src="../javascripts/underscore.js"></script>
+      <script src="../javascripts/jquery.js"></script>
       <script src="../javascripts/tamper.js"></script>
     
 
@@ -23,7 +24,13 @@
 
     
         <script>
-           $.ajax("./data/salaries-tamped.json", {
+        function getDetails(i){
+          console.log('hey');
+          console.log(i);
+        }
+
+
+           $.ajax("../data/salaries-tamped.json", {
               success: function(data) {
               window.data = Tamper.unpackData(data);
 

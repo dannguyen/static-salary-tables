@@ -201,6 +201,7 @@ def make_tamper_page
     @header = ""
     @header << %Q{
       <script src="../javascripts/underscore.js"></script>
+      <script src="../javascripts/jquery.js"></script>
       <script src="../javascripts/tamper.js"></script>
     }
     @subtitle = "AJAX and Tamper"
@@ -210,7 +211,13 @@ def make_tamper_page
     @footer = ""
     @footer += %Q{
         <script>
-           $.ajax("./data/salaries-tamped.json", {
+        function getDetails(i){
+          console.log('hey');
+          console.log(i);
+        }
+
+
+           $.ajax("../data/salaries-tamped.json", {
               success: function(data) {
               window.data = Tamper.unpackData(data);
 
