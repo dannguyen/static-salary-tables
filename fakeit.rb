@@ -73,7 +73,7 @@ end
 
 
 
-def make_page
+def make_basic_page
   require 'erb'
 
   open("./pages/basic-table.html", "w") do |f|
@@ -90,6 +90,52 @@ def make_page
     data_array.each do |d|
       @body << "<tr>" + (BUFFERED_ATTS + TAMPERED_ATTS).map{|a| "<td>#{d[a]}</td>"}.join + "</tr>"
     end
+
+    erb = ERB.new PAGE_TEMPLATE
+
+    f.write erb.result
+  end
+
+end
+
+
+def make_list_page
+  require 'erb'
+
+  open("./pages/list-table.html", "w") do |f|
+    @body = ''
+
+    @body << %Q{ <input class="search" placeholder="Search" />}
+
+
+    @body << %Q{
+      <table class="salaries">
+        <thead>
+          <tr>
+            #{(BUFFERED_ATTS + TAMPERED_ATTS).map{|a| "<th>#{a}</th>"}.join  }
+          </tr>
+        </thead>
+        <tbody>
+    }
+
+
+    data_array.each do |d|
+      @body << "<tr>" + (BUFFERED_ATTS + TAMPERED_ATTS).map{|a| "<td class=\"#{a}\">#{d[a]}</td>"}.join + "</tr>"
+    end
+
+
+    @body << %q{<script src="../javascripts/list.js"></script>}
+    @body << %q{
+        <script>
+        var options = {
+          valueNames: [ 'first_name', 'last_name' ]
+        };
+
+        var userList = new List('salaries', options);
+        </script>
+    }
+
+
 
     erb = ERB.new PAGE_TEMPLATE
 

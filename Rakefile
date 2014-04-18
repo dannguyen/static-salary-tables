@@ -15,7 +15,8 @@ namespace :generate do
   end
 
   task :pages do
-    puts make_page
+    puts make_basic_page
+    puts make_list_page
   end
 
 end
