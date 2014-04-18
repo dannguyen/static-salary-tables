@@ -24,6 +24,5 @@ end
 
 desc 'Generate and publish blog to gh-pages'
 task :publish do
-
-  system "git push origin gh-pages --force"
+  system "git push origin master:gh-pages"
 end
