@@ -104,10 +104,10 @@ def make_list_page
   open("./pages/list-table.html", "w") do |f|
 
     @body = ''
-    @body << %Q{<input class="search" placeholder="Search" />}
-    @body << %Q{<button class="sort" data-sort="salary">Salary</button>}
     @body << %Q{
       <div id="salaries">
+      <input class="search" placeholder="Search" />
+      <button class="sort" data-sort="salary">Salary</button>
       <table>
         <thead>
           <tr>
