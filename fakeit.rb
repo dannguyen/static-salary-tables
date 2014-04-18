@@ -102,7 +102,6 @@ end
 def make_list_page
   require 'erb'
   open("./pages/list-table.html", "w") do |f|
-    @js = %q{<script src="../javascripts/list.js"></script>}
 
     @body = ''
     @body << %Q{<input class="search" placeholder="Search" />}
@@ -125,14 +124,15 @@ def make_list_page
 
     @body << %q{</tbody></table></div>}
 
-    @footer = %q{
+    @footer = %q{<script src="../javascripts/list.js"></script>}
+
+    @footer += %q{
         <script>
         var options = {
           valueNames: [ 'first_name', 'last_name' ]
         };
 
         var userList = new List('salaries', options);
-        console.log(userList)
         </script>
     }
 
