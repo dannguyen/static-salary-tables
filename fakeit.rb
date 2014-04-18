@@ -9,7 +9,7 @@ def data_array
   CSV.read("#{DATA_BASEFILE}.csv", headers: true).collect{|a| Hashie::Mash.new(a.to_hash) }
 end
 
-def make_data_file
+def make_data_file(num_of_rows)
   require 'faker'
   require 'csv'
 
@@ -20,7 +20,7 @@ def make_data_file
   CSV.open("#{DATA_BASEFILE}.csv", 'w', headers: true) do |csv|
     csv << ['id'] + BUFFERED_ATTS + TAMPERED_ATTS
 
-    3500.times do |t|
+    num_of_rows.times do |t|
       csv << [
         t + 1 ,
         Name.last_name,
@@ -107,7 +107,11 @@ def make_list_page
     @body << %Q{
       <div id="salaries">
       <input class="search" placeholder="Search" />
-      <button class="sort" data-sort="salary">Salary</button>
+
+      <button class="sort" data-sort="last_name">Last Name</button>
+      <button class="sort" data-sort="department">Department</button>
+      <button class="sort" data-sort="title">Title</button>
+
       <table>
         <thead>
           <tr>
@@ -124,15 +128,19 @@ def make_list_page
 
     @body << %q{</tbody></table></div>}
 
-    @footer = %q{<script src="../javascripts/list.js"></script>}
+    @footer = %q{
+      <script src="../javascripts/list.js"></script>
+    }
+#    @footer >> %q{      <script src="../javascripts/list.fuzzy-search.js"></script>}
 
-    @footer += %q{
+    @footer += %Q{
         <script>
-        var options = {
-          valueNames: [ 'first_name', 'last_name' ]
-        };
 
-        var userList = new List('salaries', options);
+        var nameList = new List('salaries', {
+          valueNames: [ 'first_name', 'last_name', 'title', 'department' ]
+        });
+
+
         </script>
     }
 
@@ -150,7 +158,7 @@ PAGE_TEMPLATE = %Q{
 
 <html>
   <head>
-    <title>Thing</title>
+    <title>Salary Sorts</title>
 
     <!-- styles -->
 

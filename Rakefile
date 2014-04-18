@@ -2,8 +2,9 @@ require './fakeit'
 
 desc "Generate blog files"
 namespace :generate do
-  task :data do
-    puts make_data_file
+  task :data, :num do |t, args|
+    args.with_defaults(num: 3500)
+    puts make_data_file(args.num.to_i)
   end
 
   task :json do
@@ -18,10 +19,15 @@ namespace :generate do
     puts make_basic_page
     puts make_list_page
   end
-
 end
 
 
+# bakes everything (besides data)
+task :bake do
+  Rake::Task["generate:json"].invoke
+  Rake::Task["generate:tamped"].invoke
+  Rake::Task["generate:pages"].invoke
+end
 
 desc 'Generate and publish blog to gh-pages'
 task :publish do
