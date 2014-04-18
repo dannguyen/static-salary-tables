@@ -1,9 +1,7 @@
 
-
-
 <html>
   <head>
-    <title>Salary Sorts</title>
+    <title>Sortable and filterable table | Salary Sorts</title>
 
     <!-- styles -->
 
@@ -16,8 +14,14 @@
   </head>
   <body>
 
+    <h1>Sortable and filterable table</h1>
+    <p>Visit the Github repo for the source code of this and other examples: <a href="https://github.com/dannguyen/static-salary-tables">https://github.com/dannguyen/static-salary-tables</a> </p>
+
+    <p>Using list.js and Sortable, allowing searching and filtering by name, title, and department.</p>
+
      
       <div id="salaries">
+
       <input class="search" placeholder="Search" />
 
 
@@ -33,13 +37,10 @@
 
     
         <script>
-
         var nameList = new List('salaries', {
           page: 100000,
           valueNames: [ 'first_name', 'last_name', 'title', 'department' ]
         });
-
-
         </script>
     
 

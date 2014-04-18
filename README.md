@@ -6,6 +6,7 @@ Exercises using client-end searching of data tables
 
 - [Basic page](http://dannguyen.github.io/static-salary-tables/pages/basic-table.html)
 - [List.js simple page](http://dannguyen.github.io/static-salary-tables/pages/list-table.html)
+- [Datatables](http://dannguyen.github.io/static-salary-tables/pages/datatables-table.html)
 
 
 ### Build it yourself

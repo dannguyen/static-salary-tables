@@ -18,6 +18,7 @@ namespace :generate do
   task :pages do
     puts make_basic_page
     puts make_list_page
+    puts make_datatables_page
   end
 end
 

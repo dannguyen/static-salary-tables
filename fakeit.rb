@@ -77,6 +77,7 @@ def make_basic_page
   require 'erb'
 
   open("./pages/basic-table.html", "w") do |f|
+    @subtitle = "Basic"
     @body = %Q{
       <table>
         <thead>
@@ -109,9 +110,12 @@ def make_list_page
       <script src="../javascripts/sortable.js"></script>
     }
 
+    @subtitle = "Sortable and filterable table"
+    @guff = "<p>Using list.js and Sortable, allowing searching and filtering by name, title, and department.</p>"
     @body = ''
     @body << %Q{
       <div id="salaries">
+
       <input class="search" placeholder="Search" />
 
 
@@ -134,13 +138,10 @@ def make_list_page
     @footer = ""
     @footer += %Q{
         <script>
-
         var nameList = new List('salaries', {
           page: 100000,
           valueNames: [ 'first_name', 'last_name', 'title', 'department' ]
         });
-
-
         </script>
     }
 
@@ -150,15 +151,64 @@ def make_list_page
 
     f.write erb.result
   end
+end
 
+
+def make_datatables_page
+  require 'erb'
+  open("./pages/datatables-table.html", "w") do |f|
+    @header = ""
+    @header << %Q{
+      <link rel="stylesheet" href="../styles/jquery.dataTables.css" />
+
+      <script src="../javascripts/jquery.js"></script>
+      <script src="../javascripts/jquery.dataTables.js"></script>
+
+    }
+
+    @subtitle = "jQuery Datatable"
+    @guff = "<p>Using basic example of jQuery DataTables with default options</p>"
+    @body = ''
+    @body << %Q{
+
+
+      <table id="salaries-table">
+        <thead>
+          <tr>
+            #{(BUFFERED_ATTS + TAMPERED_ATTS).map{|a| "<th>#{a}</th>"}.join  }
+          </tr>
+        </thead>
+        <tbody>
+    }
+
+
+    data_array.each do |d|
+      @body << "<tr>" + (BUFFERED_ATTS + TAMPERED_ATTS).map{|a| "<td>#{d[a]}</td>"}.join + "</tr>"
+    end
+
+    @body << %q{</tbody></table>}
+
+    @footer = ""
+    @footer += %Q{
+        <script>
+            $(document).ready(function(){
+                $('#salaries-table').dataTable();
+            });
+        </script>
+    }
+
+
+
+    erb = ERB.new PAGE_TEMPLATE
+
+    f.write erb.result
+  end
 end
 
 PAGE_TEMPLATE = %Q{
-
-
 <html>
   <head>
-    <title>Salary Sorts</title>
+    <title><%=@subtitle%> | Salary Sorts</title>
 
     <!-- styles -->
 
@@ -166,6 +216,11 @@ PAGE_TEMPLATE = %Q{
 
   </head>
   <body>
+
+    <h1><%=@subtitle%></h1>
+    <p>Visit the Github repo for the source code of this and other examples: <a href="https://github.com/dannguyen/static-salary-tables">https://github.com/dannguyen/static-salary-tables</a> </p>
+
+    <%=@guff%>
 
      <%= @body %>
 
