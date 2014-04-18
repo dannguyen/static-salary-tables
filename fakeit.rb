@@ -101,21 +101,21 @@ end
 
 def make_list_page
   require 'erb'
-
   open("./pages/list-table.html", "w") do |f|
+    @js = %q{<script src="../javascripts/list.js"></script>}
+
     @body = ''
-
-    @body << %Q{ <input class="search" placeholder="Search" />}
-
-
+    @body << %Q{<input class="search" placeholder="Search" />}
+    @body << %Q{<button class="sort" data-sort="salary">Salary</button>}
     @body << %Q{
-      <table class="salaries">
+      <div id="salaries">
+      <table>
         <thead>
           <tr>
             #{(BUFFERED_ATTS + TAMPERED_ATTS).map{|a| "<th>#{a}</th>"}.join  }
           </tr>
         </thead>
-        <tbody>
+        <tbody class="list">
     }
 
 
@@ -123,15 +123,16 @@ def make_list_page
       @body << "<tr>" + (BUFFERED_ATTS + TAMPERED_ATTS).map{|a| "<td class=\"#{a}\">#{d[a]}</td>"}.join + "</tr>"
     end
 
+    @body << %q{</tbody></table></div>}
 
-    @body << %q{<script src="../javascripts/list.js"></script>}
-    @body << %q{
+    @footer = %q{
         <script>
         var options = {
           valueNames: [ 'first_name', 'last_name' ]
         };
 
         var userList = new List('salaries', options);
+        console.log(userList)
         </script>
     }
 
@@ -153,12 +154,15 @@ PAGE_TEMPLATE = %Q{
 
     <!-- styles -->
 
-    <!-- js -->
+    <%= @js %>
 
   </head>
   <body>
 
      <%= @body %>
+
+
+    <%= @footer %>
 
   </body>
 </html>
