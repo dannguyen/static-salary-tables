@@ -57,7 +57,7 @@ def make_tamped_json
   end
   # add buffered
   tamped_data.meta = {
-    buffer_url: "#{DATA_BASEFILE}-buffered.json",
+    buffer_url: "../#{DATA_BASEFILE}-buffered.json",
     buffer_callback: 'getDetails'
   }
   BUFFERED_ATTS.each do |h|
@@ -160,18 +160,13 @@ def make_datatables_page
     @header = ""
     @header << %Q{
       <link rel="stylesheet" href="../styles/jquery.dataTables.css" />
-
       <script src="../javascripts/jquery.js"></script>
       <script src="../javascripts/jquery.dataTables.js"></script>
-
     }
-
     @subtitle = "jQuery Datatable"
     @guff = "<p>Using basic example of jQuery DataTables with default options</p>"
     @body = ''
     @body << %Q{
-
-
       <table id="salaries-table">
         <thead>
           <tr>
@@ -180,14 +175,11 @@ def make_datatables_page
         </thead>
         <tbody>
     }
-
-
     data_array.each do |d|
       @body << "<tr>" + (BUFFERED_ATTS + TAMPERED_ATTS).map{|a| "<td>#{d[a]}</td>"}.join + "</tr>"
     end
 
     @body << %q{</tbody></table>}
-
     @footer = ""
     @footer += %Q{
         <script>
@@ -196,14 +188,56 @@ def make_datatables_page
             });
         </script>
     }
-
-
-
     erb = ERB.new PAGE_TEMPLATE
 
     f.write erb.result
   end
 end
+
+
+def make_tamper_page
+  require 'erb'
+  open("./pages/tamper-table.html", "w") do |f|
+    @header = ""
+    @header << %Q{
+      <script src="../javascripts/underscore.js"></script>
+      <script src="../javascripts/tamper.js"></script>
+    }
+    @subtitle = "AJAX and Tamper"
+    @guff = "<p>Using basic example of unpacking with Tamper</p>"
+    @body = 'TK'
+    @body << %q{</tbody></table>}
+    @footer = ""
+    @footer += %Q{
+        <script>
+           $.ajax("./data/salaries-tamped.json", {
+              success: function(data) {
+              window.data = Tamper.unpackData(data);
+
+            console.log(window.data.length);
+       }});
+
+
+        </script>
+    }
+    erb = ERB.new PAGE_TEMPLATE
+
+    f.write erb.result
+  end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 PAGE_TEMPLATE = %Q{
 <html>

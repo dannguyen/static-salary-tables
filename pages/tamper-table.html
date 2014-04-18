@@ -1,0 +1,38 @@
+
+<html>
+  <head>
+    <title>AJAX and Tamper | Salary Sorts</title>
+
+    <!-- styles -->
+
+    
+      <script src="../javascripts/underscore.js"></script>
+      <script src="../javascripts/tamper.js"></script>
+    
+
+  </head>
+  <body>
+
+    <h1>AJAX and Tamper</h1>
+    <p>Visit the Github repo for the source code of this and other examples: <a href="https://github.com/dannguyen/static-salary-tables">https://github.com/dannguyen/static-salary-tables</a> </p>
+
+    <p>Using basic example of unpacking with Tamper</p>
+
+     TK</tbody></table>
+
+
+    
+        <script>
+           $.ajax("./data/salaries-tamped.json", {
+              success: function(data) {
+              window.data = Tamper.unpackData(data);
+
+            console.log(window.data.length);
+       }});
+
+
+        </script>
+    
+
+  </body>
+</html>

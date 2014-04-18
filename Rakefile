@@ -19,6 +19,7 @@ namespace :generate do
     puts make_basic_page
     puts make_list_page
     puts make_datatables_page
+    puts make_tamper_page
   end
 end
 
